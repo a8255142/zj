@@ -35,26 +35,48 @@
        </property>       
         
    </bean>
+   
+    <!-- 重复提交拦截 -->
+    <mvc:interceptors>
+	   	<mvc:interceptor >
+	            <!-- 一级目录 -->
+				<mvc:mapping path="/*.do" />
+				<!-- 二级目录 -->
+				<mvc:mapping path="/*/*.do" />
+				<!-- 三级目录 -->
+				<mvc:mapping path="/*/*/*.do" />
+				<!-- 不需拦截的地址 -->
+				<mvc:exclude-mapping path="/"/> 
+				<bean class="com.dimeng.front.abilitys.avoidduplicatesubmission.interceptoradapter.AvoidDuplicateSubmissionInterceptor"></bean>
+	   	</mvc:interceptor>
+     </mvc:interceptors>
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+	
+   
     <!-- 处理JSON请求 -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="2" />
-        <!-- 如果接口全是以json格式来处理的，可以放在这个
-        <property name="defaultContentType" value="application/json;charset=UTF-8"/>
-        -->
-        <!-- <property name="mediaTypes">
-            <map>
-                <entry key="html" value="text/html"/>
-                <entry key="json" value="application/json" />
-                <entry key="xml" value="application/xml" />
-                <entry key="jsonp" value="application/javascript"/>  
-            </map>
-        </property> -->
-        
         <property name="defaultViews">
             <list>
                 <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" ></bean>
             </list>
         </property>
-        <!-- <property name="ignoreAcceptHeader" value="true" />  -->
     </bean>
+    
+     <!--tiles 视图解析   begin-->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	    <property name="definitions">
+	        <list>
+	            <value>/WEB-INF/tiles/tiles-general.xml</value>
+	        </list>
+	    </property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	    <property name="order" value="1" />
+	    <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"></property>
+	</bean>
+	<bean id="exceptionHandler" class="com.dimeng.front.exception.FrontExceptionHandler"/>
+	<!--tiles 视图解析   end-->
+    
+    
 </beans>

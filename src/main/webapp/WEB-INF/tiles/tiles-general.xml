@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <!DOCTYPE tiles-definitions PUBLIC 
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> 
+ <tiles-definitions> 
+  	<definition name="based_temple" 
+         template="/WEB-INF/include/htmlTemplate.jsp"> 
+         <put-attribute name="body" value="" /> 
+     </definition> 
+ 	<definition name="temple_page" 
+         template="/WEB-INF/include/layout.jsp"> 
+         <put-attribute name="title" value="黄金宝系统前台" /> 
+         <put-attribute name="header" value="/WEB-INF/include/header.jsp" /> 
+         <put-attribute name="body" value="" /> 
+         <put-attribute name="footer" value="/WEB-INF/include/footer.jsp" /> 
+     </definition> 
+     <definition name="temple_base" 
+         template="/WEB-INF/include/layout.jsp"> 
+         <put-attribute name="header" value="" /> 
+         <put-attribute name="body" value="" /> 
+         <put-attribute name="footer" value="" /> 
+     </definition> 
+     
+     <definition name="temple_footer" 
+         template="/WEB-INF/include/layout.jsp"> 
+         <put-attribute name="header" value="" /> 
+         <put-attribute name="body" value="" /> 
+         <put-attribute name="footer" value="/WEB-INF/include/footer.jsp" /> 
+     </definition>
+     <!-- 后面其他模块视图都按下面账户总览实例添加即可。或者命名方式按通配符的格式来访问也可以 -->
+     <!-- 
+                  通配符配置  
+                  例如： return new ModelAndView("user/testJspPage", "users", users);
+                  其中user为模块名 ，testJsp为testJsp.jsp的名称，按此规则命名则不需在此添加配置，系统会默认
+                  走通配符配置
+      -->
+     <definition name="*/*.page" extends="temple_page" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}.jsp" />
+     </definition>
+     <definition name="*/*/*.page" extends="temple_page" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}/{3}.jsp" />
+     </definition>
+      <definition name="*/*/*/*.page" extends="temple_page" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     <definition name="*/*.error" extends="temple_base" >
+        <put-attribute name="body" value="/WEB-INF/{1}/{2}.jsp" />
+     </definition>
+     <definition name="*/*.base" extends="temple_base" >
+        <put-attribute name="body" value="/WEB-INF/{1}/{2}.jsp" />
+     </definition>
+     <definition name="*/*/*.base" extends="temple_base" >
+        <put-attribute name="body" value="/WEB-INF/{1}/{2}/{3}.jsp" />
+     </definition>
+      <definition name="*/*/*/*.base" extends="temple_base" >
+        <put-attribute name="body" value="/WEB-INF/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     <!-- 通配符配置，不包含头和底部  -->
+     <definition name="*/*.based" extends="based_temple" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}.jsp" />
+     </definition>
+     <definition name="*/*/*.based" extends="based_temple" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}/{3}.jsp" />
+     </definition>
+      <definition name="*/*/*/*.based" extends="based_temple" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}/{3}/{4}.jsp" />
+     </definition>
+     <!-- 账户总览  事例 -->
+     <definition name="testJsp" extends="temple_page"> 
+         <put-attribute name="title" value="账户总览" /> 
+         <put-attribute name="body" value="/WEB-INF/pages/user/testJsp.jsp" /> 
+     </definition> 
+     
+     <!-- 首页 -->
+     <definition name="homepage" extends="temple_page"> 
+         <put-attribute name="title" value="首页" /> 
+         <put-attribute name="body" value="/WEB-INF/pages/home/homepage.jsp" /> 
+     </definition>
+     
+     <definition name="*/*.foot" extends="temple_footer" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}.jsp" />
+     </definition>
+     
+      <!-- app专用注册页面 -->
+     <!-- <definition name="appRegister" extends="based_temple"> 
+         <put-attribute name="body" value="/WEB-INF/pages/hjb/appRegister.html" /> 
+     </definition> -->
+     
+      <!-- app专用下载页面 -->
+     <!-- <definition name="download" extends="based_temple"> 
+         <put-attribute name="body" value="/WEB-INF/pages/hjb/download.html" /> 
+     </definition>  -->
+     
+     <definition name="*/*.app" extends="based_temple" >
+        <put-attribute name="body" value="/WEB-INF/pages/{1}/{2}.jsp" />
+     </definition>
+
+       
+ </tiles-definitions>
