@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<!-- 控制台 -->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS}|%p|{ %m }| Method: %l %n" />
+		</layout>
+	</appender>
+	<appender name="ALL_LOG" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="../logs/console/all_log.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"></param>  
+		<param name="MaxBackupIndex" value="10" />
+		<param name="MaxFileSize" value="50KB" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS}|%p | %m | Method: %l %n" />
+		</layout>
+	</appender>
+	
+	<category name="com.dimeng" additivity="false">
+		<priority value="INFO" />
+		<appender-ref ref="ALL_LOG" />
+		<appender-ref ref="CONSOLE" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</category>
+	<category name="com.alibaba" additivity="false">
+		<priority value="ERROR" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+		<appender-ref ref="ALL_LOG" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</category>
+	<category name="org.springframework" additivity="false">
+		<priority value="ERROR" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+		<appender-ref ref="ALL_LOG" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</category>
+	<category name="org.quartz" additivity="false">
+		<priority value="ERROR" />
+		<!--  <appender-ref ref="CONSOLE" />-->
+		<appender-ref ref="ALL_LOG" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</category>
+	<!-- 根logger的设置,设置所有输出的通道 -->
+	<root>
+		<priority value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+		<!-- <appender-ref ref="ALL_LOG" /> -->
+	</root>
+</log4j:configuration>
